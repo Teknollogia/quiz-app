@@ -1,2 +1,0 @@
-Client_ID: 930352788670-ksa1aosqjml7ael4gtfdo71jnmuvovg5.apps.googleusercontent.com
-Client_secret: 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
