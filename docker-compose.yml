@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./quiz-app_backend
+    container_name: quiz-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./quiz-app_backend:/app
+    environment:
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASSWORD=740422
+      - DB_NAME=quizapp
+    depends_on:
+      - db
+
+  frontend:
+    build: ./quiz-app_frontend
+    container_name: quiz-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./quiz-app_frontend/src:/app/src
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:15
+    container_name: quiz-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=740422
+      - POSTGRES_DB=quizapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
