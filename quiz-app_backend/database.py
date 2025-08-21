@@ -11,6 +11,7 @@ DB_NAME = os.getenv("DB_NAME", "quizapp")
 print(f"DB_USER: {DB_USER}, DB_PASS: {DB_PASS}, DB_HOST: {DB_HOST}")
 
 SQLALCHEMY_DATABASE_URL = f'postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:5432/{DB_NAME}'
+#SQLALCHEMY_DATABASE_URL = f'postgresql://{DB_USER}:{DB_PASS}@localhost:5432/{DB_NAME}'
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 

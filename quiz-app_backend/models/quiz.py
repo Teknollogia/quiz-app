@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class AnswerCreate(BaseModel):
     answer_text: str
+    is_correct: int #
 
 class QuestionCreate(BaseModel):
     question_text: str
@@ -16,6 +17,7 @@ class QuizCreate(BaseModel):
 class AnswerResponse(BaseModel):
     id: int
     answer_text: str
+    is_correct: int
 
     class Config:
         orm_mode = True

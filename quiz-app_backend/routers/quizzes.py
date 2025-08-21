@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from database import get_db
 from models.question import Quiz, Question, Answer
 from models.user import User
@@ -21,7 +21,7 @@ def create_quiz(quiz: QuizCreate, db: Session = Depends(get_db), current_user: U
         db.commit()
         db.refresh(db_question)
         for a in q.answers:
-            db_answer = Answer(answer_text=a.answer_text, question_id = db_question.id)
+            db_answer = Answer(answer_text=a.answer_text, is_correct = a.is_correct, question_id = db_question.id)
             db.add(db_answer)
 
     db.commit()
@@ -35,7 +35,7 @@ def get_quizzes(db: Session = Depends(get_db)):
 
 @router.get("/quizzes/{quiz_id}", response_model=QuizResponse)
 def get_quiz(quiz_id: int, db: Session = Depends(get_db)):
-    quiz = db.query(Quiz).filter(Quiz.id == quiz_id).first()
+    quiz = db.query(Quiz).options(joinedload(Quiz.questions).joinedload(Question.answers)).filter(Quiz.id == quiz_id).first()
     if not quiz:
         raise HTTPException(status_code=404, detail="Quiz not found")
     return quiz

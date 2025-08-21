@@ -41,7 +41,7 @@ export default function CreateQuiz() {
         created_by: 1,   //PAY ATTENTION: created_by in QuizResponse model is integer (createdBy.trim())
         questions: questions.map((q) => ({
           question_text: q.text,
-          answers: q.answers.map((a) => ({ answer_text: a }))
+          answers: q.answers.map((a, idx) => ({ answer_text: a, is_correct: idx === q.correctIndex })),
         }))
     };
 
@@ -69,11 +69,6 @@ export default function CreateQuiz() {
         placeholder="Quiz Title" 
         value = {title} 
         onChange={(e) => setTitle(e.target.value)} 
-      /> 
-      <input
-        placeholder="Created By"
-        value={createdBy}
-        onChange={(e) => setCreatedBy(e.target.value)}
       />
 
       {questions.map((q, qIndex) => (

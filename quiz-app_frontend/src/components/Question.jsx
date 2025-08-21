@@ -27,7 +27,7 @@ export default function Question({ question, onSelectAnswer, onSkipAnswer }) {
     setTimeout(() => {
       setAnswer({
         selectedAnswer: answer,
-        isCorrect: question.answers[0].answer_text === answer,
+        isCorrect: answer.is_correct === 1,
       });
 
       setTimeout(() => {
@@ -53,7 +53,7 @@ export default function Question({ question, onSelectAnswer, onSkipAnswer }) {
       />
       <h2>{question.question_text}</h2>
       <Answers
-        answers={question.answers.map((a) => a.answer_text)}
+        answers={question.answers}
         selectedAnswer={answer.selectedAnswer}
         answerState={answerState}
         onSelect={handleSelectAnswer}

@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, text
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, relationship
 from pydantic import BaseModel
 from database import Base, engine
 
@@ -14,6 +14,7 @@ class User(Base):
 	google_id = Column(String, unique=True, index=True, nullable=True)
 	auth_provider = Column(String, default="local")
 	role = Column(String, default="student")
+	quizzes = relationship("Quiz", back_populates="owner")
 
 class UserResponse(BaseModel):
 	username: str
@@ -41,5 +42,6 @@ class ResponseMessage(BaseModel):
 	message: str
 
 
+#Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind = engine)
 

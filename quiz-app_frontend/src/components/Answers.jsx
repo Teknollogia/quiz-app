@@ -4,7 +4,7 @@ export default function Answers({
   answers,
   selectedAnswer,
   answerState,
-  onSelect,
+  onSelect
 }) {
   const shuffledAnswers = useRef();
 
@@ -30,15 +30,15 @@ export default function Answers({
         }
 
         return (
-          <li key={answer} className="answer">
+          <li key={answer.id} className="answer">
             <button
               onClick={() => onSelect(answer)}
               className={cssClass}
               disabled={answerState !== ""}
             >
-              {answer}
+              {answer.answer_text}
             </button>
-          </li>
+        </li>
         );
       })}
     </ul>

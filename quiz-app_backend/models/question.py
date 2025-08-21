@@ -11,6 +11,7 @@ class Quiz(Base):
     title = Column(String, nullable=False)
     created_by = Column(Integer, ForeignKey("users.id"))
     questions = relationship("Question", back_populates="quiz")
+    owner = relationship("User", back_populates="quizzes")
 
 class Question(Base):
     __tablename__ = "questions"
@@ -25,6 +26,7 @@ class Answer(Base):
     id = Column(Integer, primary_key=True, index=True)
     question_id = Column(Integer, ForeignKey("questions.id"))
     answer_text = Column(String)
+    is_correct = Column(Integer, default=0) 
     question = relationship("Question", back_populates="answers")
 
 class Result(Base):
@@ -33,5 +35,9 @@ class Result(Base):
     quiz_id = Column(Integer, ForeignKey("quizzes.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
 
+
+
+
+#Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind = engine)
 

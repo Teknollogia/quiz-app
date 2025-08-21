@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class AnswerCreate(BaseModel):
     answer_text: str
+    is_correct: int  #
 
 class AnswerSchema(BaseModel):
     id: int
