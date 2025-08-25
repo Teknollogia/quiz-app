@@ -34,6 +34,7 @@ app.include_router(users.router, prefix="/users", tags=["users"])
 # app.include_router(users.router, prefix="/login", tags = ["login"])
 app.include_router(questions.router, prefix="/questions", tags = ["questions"])
 app.include_router(quizzes.router, prefix="/quizzes")
+app.include_router(auth.router, prefix="/auth", tags=["auth"])
 
 @app.get("/")
 def read_root():

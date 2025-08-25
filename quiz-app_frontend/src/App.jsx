@@ -23,10 +23,14 @@ function OAuthCallbackHandler() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
-    console.log("OAuthCallbackHandler token:", token);
+    const username = params.get("username");
+    const role = params.get("role");
 
     if (token) {
       localStorage.setItem("token", token);
+      localStorage.setItem("username", username);
+      localStorage.setItem("role", role);
+
       navigate("/");
     } else {
       console.error("Google login failed or no token found.");
@@ -102,7 +106,7 @@ function App() {
         <Route path="/quizzes/createQuiz" element={<CreateQuiz />} />
 
         {/* OAuth callback */}
-        <Route path="/auth/callback" element={<OAuthCallbackHandler />} />
+        <Route path="/auth/google/callback" element={<OAuthCallbackHandler />} />
       </Routes>
     </div>
   );
