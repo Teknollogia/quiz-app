@@ -38,3 +38,19 @@ class QuizResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+class ResultCreate(BaseModel):
+    correct_answers_rate: int
+    skipped_answers_rate: int
+    wrong_answers_rate: int
+
+class ResultResponse(BaseModel):
+    id: int
+    quiz_id: int
+    user_id: int
+    correct_answers_rate: int
+    skipped_answers_rate: int
+    wrong_answers_rate: int
+
+    class Config:
+        orm_mode = True

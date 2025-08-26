@@ -15,6 +15,7 @@ class User(Base):
 	auth_provider = Column(String, default="local")
 	role = Column(String, default="student")
 	quizzes = relationship("Quiz", back_populates="owner")
+	results = relationship("Result", back_populates="user")
 
 class UserResponse(BaseModel):
 	username: str

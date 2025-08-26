@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import CreateQuiz from "./components/CreateQuiz";
 import AggregateQuiz from "./components/AggregateQuiz";
 import Quiz from "./components/Quiz";
+import Summaries from "./pages/Summaries";
 
 import {
   useLocation,
@@ -75,6 +76,9 @@ function App() {
         <Link to="/login" className="text-blue-600 hover:underline">
           Login
         </Link>
+        <Link to="/quizzes/summaries" className="text-blue-600 hover:underline">
+          Quiz Summaries
+        </Link>
         &nbsp; &nbsp;
         <button
           onClick={() => (window.location.href = GOOGLE_AUTH_URL)}
@@ -104,6 +108,7 @@ function App() {
         <Route path="/quizzes/quizzes" element={<AggregateQuiz />} />
         <Route path="/quizzes/quizzes/:quizId" element={<Quiz />} />
         <Route path="/quizzes/createQuiz" element={<CreateQuiz />} />
+        <Route path="/quizzes/summaries" element={<Summaries />} />
 
         {/* OAuth callback */}
         <Route path="/auth/google/callback" element={<OAuthCallbackHandler />} />

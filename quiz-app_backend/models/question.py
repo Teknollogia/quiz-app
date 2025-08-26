@@ -12,6 +12,7 @@ class Quiz(Base):
     created_by = Column(Integer, ForeignKey("users.id"))
     questions = relationship("Question", back_populates="quiz")
     owner = relationship("User", back_populates="quizzes")
+    results = relationship("Result", back_populates="quiz")
 
 class Question(Base):
     __tablename__ = "questions"
@@ -29,13 +30,18 @@ class Answer(Base):
     is_correct = Column(Integer, default=0) 
     question = relationship("Question", back_populates="answers")
 
+# This model is for storing the results of all users of all quizzes
 class Result(Base):
-    __tablename__ = "results"
+    __tablename__ = "results" 
     id = Column(Integer, primary_key=True, index=True)
     quiz_id = Column(Integer, ForeignKey("quizzes.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
+    correct_answers_rate = Column(Integer)
+    skipped_answers_rate = Column(Integer)
+    wrong_answers_rate = Column(Integer)
 
-
+    quiz = relationship("Quiz", back_populates="results")
+    user = relationship("User", back_populates="results")
 
 
 #Base.metadata.drop_all(bind=engine)

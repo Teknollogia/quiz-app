@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Fragment, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import quizCompleteImg from "../assets/quiz-complete.png";
 
 export default function Summary({ userAnswers }) {
   const [questions, setQuestions] = useState([]);
+  const navigate = useNavigate();
+
   const { quizId } = useParams();
 
   useEffect(() => {
@@ -11,6 +13,7 @@ export default function Summary({ userAnswers }) {
       .then((res) => res.json())
       .then((data) => setQuestions(data.questions));
   }, [quizId]);
+
 
   if (questions.length === 0 || userAnswers.length === 0) {
     return <p>Loading summary...</p>;
@@ -38,6 +41,46 @@ export default function Summary({ userAnswers }) {
   );
   const incorrectAnswersShare =
     100 - skippedAnswersShare - correctAnswersShare;
+
+  const handlePostResults = () => {
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
+
+    if (!token || !username) {
+      console.error("User not logged in");
+      return;
+    }
+
+    const payload = {
+      correct_answers_rate: correctAnswersShare,
+      skipped_answers_rate: skippedAnswersShare,
+      wrong_answers_rate: incorrectAnswersShare,
+    };
+
+    console.log("Posting results:", payload);
+
+    fetch(`http://localhost:8000/quizzes/submitQuiz/${quizId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to post results");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Results posted successfully:", data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+      navigate("/");
+  }
 
   return (
     <div id="summary">
@@ -77,11 +120,14 @@ export default function Summary({ userAnswers }) {
           }
 
           return (
-            <li key={index}>
-              <h3>{index + 1}</h3>
-              <p className="question">{question?.question_text}</p>
-              <p className={cssClass}>{userAnswerText ?? "Skipped"}</p>
-            </li>
+            <Fragment key={index}>
+              <li key={index}>
+                <h3>{index + 1}</h3>
+                <p className="question">{question?.question_text}</p>
+                <p className={cssClass}>{userAnswerText ?? "Skipped"}</p>
+              </li>
+              <button onClick={handlePostResults}>Quiz Final</button>
+            </Fragment> 
           );
         })}
       </ol>
