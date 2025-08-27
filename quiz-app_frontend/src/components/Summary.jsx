@@ -56,7 +56,7 @@ export default function Summary({ userAnswers }) {
       skipped_answers_rate: skippedAnswersShare,
       wrong_answers_rate: incorrectAnswersShare,
     };
-
+    
     console.log("Posting results:", payload);
 
     fetch(`http://localhost:8000/quizzes/submitQuiz/${quizId}`, {
@@ -126,11 +126,11 @@ export default function Summary({ userAnswers }) {
                 <p className="question">{question?.question_text}</p>
                 <p className={cssClass}>{userAnswerText ?? "Skipped"}</p>
               </li>
-              <button onClick={handlePostResults}>Quiz Final</button>
             </Fragment> 
           );
         })}
       </ol>
+      <button onClick={handlePostResults}>Quiz Final</button>
     </div>
   );
 }

@@ -49,7 +49,7 @@ def submit_quiz(
     current_user: User = Depends(get_current_user)
 ):
     db_result = Result(
-        quiz_id = quiz_id,  # take from URL param, not from body
+        quiz_id = quiz_id,
         user_id = current_user.id,
         correct_answers_rate = result.correct_answers_rate,
         skipped_answers_rate = result.skipped_answers_rate,

@@ -40,6 +40,7 @@ export default function LoginForm( {onLogin} ) {
       setMessage(`Welcome back, ${data.username}`);
       localStorage.setItem("token", data.access_token);
       localStorage.setItem("role", data.role);
+      localStorage.setItem("username", data.username);
 
       if (onLogin) {
         onLogin();

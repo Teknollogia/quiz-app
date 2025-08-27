@@ -14,17 +14,28 @@ export default function Summaries() {
             <h2>Quiz summaries</h2>
             {
                 summaries.length > 0 ? (
-                    <ul>
-                        {summaries.map((summary) => (
-                            <li key={summary.id}>
-                                <p>Quiz ID: {summary.quiz_id}</p>
-                                <p>User_ID: {summary.user_id}</p>
-                                <p>Correct Answers Rate: {summary.correct_answers_rate}%</p>
-                                <p>Skipped Answers Rate: {summary.skipped_answers_rate}%</p>
-                                <p>Wrong Answers Rate: {summary.wrong_answers_rate}%</p>
-                            </li>
-                        ))}
-                    </ul>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Quiz ID</th>
+                                <th>User ID</th>
+                                <th>Correct Answers Rate</th>
+                                <th>Skipped Answers Rate</th>
+                                <th>Wrong Answers Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {summaries.map((summary) => (
+                                <tr key={summary.id}>
+                                    <td>{summary.quiz_id}</td>
+                                    <td>{summary.user_id}</td>
+                                    <td>{summary.correct_answers_rate}%</td>
+                                    <td>{summary.skipped_answers_rate}%</td>
+                                    <td>{summary.wrong_answers_rate}%</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 ) : (
                     <p>No summaries available.</p>
                 )
