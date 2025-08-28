@@ -59,7 +59,7 @@ export default function LoginForm( {onLogin} ) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {fields.map((field) => (
-        <div key={field.name} className="flex flex-col">
+        <div key={field.name} className="login-field">
           &nbsp;&nbsp;
           <label htmlFor={field.name} className="mb-1 font-medium">
             {field.label}
